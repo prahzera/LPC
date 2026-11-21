@@ -68,3 +68,6 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 REBASE.bat
+/.gradle/
+
+/build/*
