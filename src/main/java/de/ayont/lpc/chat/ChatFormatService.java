@@ -122,6 +122,11 @@ public final class ChatFormatService {
      * @return the fully rendered chat line
      */
     public Component render(Player source, Component message, Component displayName) {
+        return render(source, message, displayName, source);
+    }
+
+    /** Renders the chat line using the sender and recipient for relational placeholders. */
+    public Component render(Player source, Component message, Component displayName, Player recipient) {
         CachedMetaData metaData = luckPerms.getPlayerAdapter(Player.class).getMetaData(source);
         String group = metaData.getPrimaryGroup();
         if (group == null) {
@@ -141,6 +146,9 @@ public final class ChatFormatService {
 
         if (hasPapi) {
             format = PlaceholderAPI.setPlaceholders(source, format);
+            if (format.contains("%rel_")) {
+                format = PlaceholderAPI.setRelationalPlaceholders(source, recipient, format);
+            }
         }
 
         return trustedMiniMessage.deserialize(format, Placeholder.component(messageTag, styledMessage));

@@ -21,6 +21,8 @@
 #
 # NOTE: Prefixes, suffixes and colors must use MiniMessage, not legacy (&a / §b) codes.
 # PlaceholderAPI placeholders (%...%) are supported inside formats when PlaceholderAPI is installed.
+# Relational placeholders (%rel_...%) use the sender and each chat recipient on Paper.
+# Console and the legacy Spigot formatter use the sender for both sides of the relation.
 
 # Main chat format.
 chat-format: "{prefix}{name}<dark_gray> »<reset> {message}"
