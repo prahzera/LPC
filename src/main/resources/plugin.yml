@@ -5,14 +5,27 @@ api-version: '${apiVersion}'
 folia-supported: true
 authors: [Ayont, Veylor-Development]
 depend: [LuckPerms]
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, UniversalAdmin]
 description: Flexible MiniMessage chat formatter for LuckPerms (Minecraft 26.2 / Java 25 / Adventure 5)
 website: https://modrinth.com/plugin/lpc-chat
 commands:
   lpc:
     description: LPC chat formatter commands.
     usage: "Usage: /lpc <reload|version|help>"
+  msg:
+    description: Sends a private message.
+    usage: /msg <player> <message>
+    aliases: [tell, w, whisper, pm]
+    permission: lpc.whisper
+  reply:
+    description: Replies to the last private contact.
+    usage: /r <message>
+    aliases: [r]
+    permission: lpc.whisper
 permissions:
+  lpc.whisper:
+    description: Allows private messages and replies.
+    default: true
   lpc.reload:
     description: Allows reloading the LPC configuration.
     default: op

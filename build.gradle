@@ -27,6 +27,13 @@ final def API_VERSION = '1.21'
 
 repositories {
     mavenCentral()
+    ivy {
+        name = 'UniversalAdminReleases'
+        url = 'https://github.com/universaladmin-mc/UniversalAdmin/releases/download'
+        patternLayout { artifact 'v[revision]/[artifact]-[revision].[ext]' }
+        metadataSources { artifact() }
+        content { includeModule('dev.universaladmin', 'universaladmin-api') }
+    }
     maven {
         name = "papermc-repo"
         url = "https://repo.papermc.io/repository/maven-public/"
@@ -46,6 +53,7 @@ configurations {
 }
 
 dependencies {
+    compileOnly "dev.universaladmin:universaladmin-api:1.9.0"
     compileOnly "io.papermc.paper:paper-api:${PAPER}"
     compileOnly "net.luckperms:api:$luckpermsapi"
     compileOnly "me.clip:placeholderapi:$papi"

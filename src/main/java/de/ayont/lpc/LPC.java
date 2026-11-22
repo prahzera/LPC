@@ -6,6 +6,7 @@ import de.ayont.lpc.chat.ItemPlaceholder;
 import de.ayont.lpc.chat.MentionService;
 import de.ayont.lpc.chat.UrlLinkifier;
 import de.ayont.lpc.commands.LPCCommand;
+import de.ayont.lpc.commands.WhisperCommand;
 import de.ayont.lpc.listener.AsyncChatListener;
 import de.ayont.lpc.listener.ConnectionListener;
 import de.ayont.lpc.listener.SpigotChatListener;
@@ -58,6 +59,7 @@ public final class LPC extends JavaPlugin {
         this.urlLinkifier = new UrlLinkifier(this);
         this.mentionService = new MentionService(this);
         registerCommand();
+        registerWhisperCommands();
         registerListeners();
         startUpdateChecker();
         logRuntimePlatform();
@@ -179,6 +181,22 @@ public final class LPC extends JavaPlugin {
         LPCCommand executor = new LPCCommand(this);
         command.setExecutor(executor);
         command.setTabCompleter(executor);
+    }
+
+    private void registerWhisperCommands() {
+        PluginCommand message = getCommand("msg");
+        PluginCommand reply = getCommand("reply");
+        if (message == null || reply == null) {
+            getLogger().warning("Whisper commands are missing from plugin.yml.");
+            return;
+        }
+
+        WhisperCommand whispers = new WhisperCommand(this);
+        message.setExecutor(whispers);
+        message.setTabCompleter(whispers);
+        reply.setExecutor(whispers);
+        reply.setTabCompleter(whispers);
+        getServer().getPluginManager().registerEvents(whispers, this);
     }
 
     private void registerListeners() {
